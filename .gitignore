@@ -1,6 +1,9 @@
 # From https://github.com/github/gitignore/blob/master/Gradle.gitignore
 .gradle
-/build/
+build/
+out/
 
 # User-specific stuff:
-.idea/
+**/.idea/*
+**/*.iml
+/.idea/
