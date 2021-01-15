@@ -2,6 +2,6 @@ steps:
   - name: 'openjdk:11-jdk'
     env: ["GRADLE_USER_HOME=cache"]
     entrypoint: "bash"
-    args: [ "-c", "./gradlew bootBuildImage"]
-images: ['gcr.io/items-project-1/items-api:latest']
+    args: [ "-c", "./gradlew bootBuildImage --imageName=gcr.io/$PROJECT_ID/items-api:latest"]
+images: ['gcr.io/$PROJECT_ID/items-api:latest']
 
