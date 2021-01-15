@@ -66,4 +66,8 @@ test {
     useJUnitPlatform()
 }
 
+bootBuildImage {
+    imageName = "gcr.io/items-api/${project.name}:${project.version}"
+}
+
 check.dependsOn testIntegration
