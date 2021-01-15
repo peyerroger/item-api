@@ -3,3 +3,5 @@ steps:
     env: ["GRADLE_USER_HOME=cache"]
     entrypoint: "bash"
     args: [ "-c", "./gradlew bootBuildImage"]
+images: ['gcr.io/items-project-1/items-api:latest']
+

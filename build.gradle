@@ -67,7 +67,7 @@ test {
 }
 
 bootBuildImage {
-    imageName = "gcr.io/items-api/${project.name}:${project.version}"
+    imageName = "gcr.io/items-project-1/items-api:latest"
 }
 
 check.dependsOn testIntegration
