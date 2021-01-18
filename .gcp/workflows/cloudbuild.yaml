@@ -12,7 +12,14 @@ steps:
     id: Push
   - name: gcr.io/cloud-builders/kubectl
     args:
-      - create serviceaccount --namespace production items-api
+      - create
+      - serviceaccount
+      - --namespace
+      - '$_GKE_CLUSTER'
+      - items-api
+    env:
+      - "CLOUDSDK_COMPUTE_REGION=$_GKE_LOCATION"
+      - "CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER"
   - name: gcr.io/cloud-builders/gke-deploy
     args:
       - prepare
