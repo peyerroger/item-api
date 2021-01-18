@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: "items-api-sha256-1"
-          image: "gcr.io/items-project-1/items-api@sha256:eeef740e81c61fb728ca8e6d3dd3ab66efa329759e1be14478d3022f01356892"
+          image: "gcr.io/items-project-1/items-api"
 ---
 apiVersion: "autoscaling/v2beta1"
 kind: "HorizontalPodAutoscaler"
