@@ -1,9 +1,9 @@
-package com.rogerpeyer.googlecloudexample.api;
+package com.rogerpeyer.itemsapi.api;
 
-import com.rogerpeyer.googlecloudexample.api.converter.ItemConverter;
-import com.rogerpeyer.googlecloudexample.api.model.Item;
-import com.rogerpeyer.googlecloudexample.persistence.ItemRepository;
-import com.rogerpeyer.googlecloudexample.persistence.model.ItemPo;
+import com.rogerpeyer.itemsapi.api.converter.ItemConverter;
+import com.rogerpeyer.itemsapi.api.model.Item;
+import com.rogerpeyer.itemsapi.persistence.ItemRepository;
+import com.rogerpeyer.itemsapi.persistence.model.ItemPo;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

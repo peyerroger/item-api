@@ -1,4 +1,4 @@
-package com.rogerpeyer.googlecloudexample.persistence.model;
+package com.rogerpeyer.itemsapi.persistence.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

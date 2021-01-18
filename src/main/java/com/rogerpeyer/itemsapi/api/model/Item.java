@@ -1,4 +1,4 @@
-package com.rogerpeyer.googlecloudexample.api.model;
+package com.rogerpeyer.itemsapi.api.model;
 
 import lombok.Data;
 

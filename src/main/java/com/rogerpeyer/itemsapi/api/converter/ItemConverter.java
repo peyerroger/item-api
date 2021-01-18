@@ -1,7 +1,7 @@
-package com.rogerpeyer.googlecloudexample.api.converter;
+package com.rogerpeyer.itemsapi.api.converter;
 
-import com.rogerpeyer.googlecloudexample.api.model.Item;
-import com.rogerpeyer.googlecloudexample.persistence.model.ItemPo;
+import com.rogerpeyer.itemsapi.api.model.Item;
+import com.rogerpeyer.itemsapi.persistence.model.ItemPo;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

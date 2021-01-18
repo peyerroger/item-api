@@ -1,11 +1,10 @@
-package com.rogerpeyer.googlecouldexample;
+package com.rogerpeyer.itemsapi;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-import com.rogerpeyer.googlecloudexample.Application;
-import com.rogerpeyer.googlecloudexample.api.model.Item;
+import com.rogerpeyer.itemsapi.api.model.Item;
 import java.net.URI;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;

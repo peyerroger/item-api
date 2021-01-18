@@ -1,11 +1,11 @@
-package com.rogerpeyer.googlecloudexample.api.converter;
+package com.rogerpeyer.itemsapi.api.converter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import com.rogerpeyer.googlecloudexample.api.model.Item;
-import com.rogerpeyer.googlecloudexample.persistence.model.ItemPo;
+import com.rogerpeyer.itemsapi.api.model.Item;
+import com.rogerpeyer.itemsapi.persistence.model.ItemPo;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
