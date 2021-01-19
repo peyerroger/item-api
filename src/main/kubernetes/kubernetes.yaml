@@ -1,3 +1,31 @@
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: items-api
+spec:
+  displayName: items-api
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    iam.gke.io/gcp-service-account: items-api@items-project-1.iam.gserviceaccount.com
+  name: items-api
+  namespace: default
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicy
+metadata:
+  name: iampolicy-workload-identity-sample
+spec:
+  resourceRef:
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+    name: items-api
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - serviceAccount:items-project-1.svc.id.goog[default/items-api]
 ---
 apiVersion: "apps/v1"
 kind: "Deployment"
@@ -16,6 +44,7 @@ spec:
       labels:
         app: "items-api"
     spec:
+      serviceAccountName: "items-api"
       containers:
         - name: "items-api-sha256-1"
           image: "gcr.io/items-project-1/items-api"
