@@ -6,14 +6,6 @@ metadata:
 spec:
   displayName: items-api
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  annotations:
-    iam.gke.io/gcp-service-account: items-api@items-project-1.iam.gserviceaccount.com
-  name: items-api
-  namespace: default
----
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicy
 metadata:
@@ -28,6 +20,14 @@ spec:
     - role: roles/iam.workloadIdentityUser
       members:
         - serviceAccount:items-project-1.svc.id.goog[default/items-api]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    iam.gke.io/gcp-service-account: items-api@items-project-1.iam.gserviceaccount.com
+  name: items-api
+  namespace: default
 ---
 apiVersion: "apps/v1"
 kind: "Deployment"
