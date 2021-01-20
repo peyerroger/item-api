@@ -50,6 +50,10 @@ spec:
       containers:
         - name: "items-api-sha256-1"
           image: "gcr.io/items-project-1/items-api"
+          env:
+            env:
+              - name: "SPRING_DATASOURCE_URL"
+                value: "jdbc:postgresql://localhost:5432/item-db"
         - name: cloud-sql-proxy
           # It is recommended to use the latest version of the Cloud SQL proxy
           # Make sure to update on a regular schedule!

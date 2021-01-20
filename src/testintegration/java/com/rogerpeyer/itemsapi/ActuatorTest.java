@@ -3,23 +3,15 @@ package com.rogerpeyer.itemsapi;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import com.rogerpeyer.itemsapi.common.BaseTest;
 import java.net.URI;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.web.server.LocalManagementPort;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = Application.class)
-public class ActuatorTest {
 
-  @LocalManagementPort private int port;
-
-  @Autowired private TestRestTemplate restTemplate;
+public class ActuatorTest extends BaseTest {
 
   @Test
   public void testLiveness() {
@@ -28,7 +20,7 @@ public class ActuatorTest {
         UriComponentsBuilder.newInstance()
             .scheme("http")
             .host("localhost")
-            .port(port)
+            .port(actuatorPort)
             .path("/actuator/health/liveness")
             .build()
             .toUri();
@@ -44,7 +36,7 @@ public class ActuatorTest {
         UriComponentsBuilder.newInstance()
             .scheme("http")
             .host("localhost")
-            .port(port)
+            .port(actuatorPort)
             .path("/actuator/health/readiness")
             .build()
             .toUri();

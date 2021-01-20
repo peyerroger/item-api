@@ -5,28 +5,37 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 import com.rogerpeyer.itemsapi.api.model.Item;
+import com.rogerpeyer.itemsapi.common.BaseTest;
 import java.net.URI;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = Application.class)
-public class ItemApiTest {
+public class ItemApiTest extends BaseTest {
 
-  @LocalServerPort private int port;
+  @Container
+  private static final PostgreSQLContainer<?> postgresqlContainer =
+      new PostgreSQLContainer<>("postgres:13.1")
+          .withDatabaseName("foo")
+          .withUsername("foo")
+          .withPassword("secret");
 
-  @Autowired private TestRestTemplate restTemplate;
+  @DynamicPropertySource
+  static void registerPgProperties(DynamicPropertyRegistry registry) {
+    registry.add("spring.datasource.url", postgresqlContainer::getJdbcUrl);
+    registry.add("spring.datasource.username", postgresqlContainer::getUsername);
+    registry.add("spring.datasource.password", postgresqlContainer::getPassword);
+  }
 
   @Test
   public void test() {
