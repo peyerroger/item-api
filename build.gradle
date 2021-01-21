@@ -1,3 +1,5 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.4.1'
@@ -67,6 +69,14 @@ testIntegration {
 
 test {
     useJUnitPlatform()
+}
+
+task processKubernetesResources(type: Copy) {
+    String dbpass = project.hasProperty('dbpass') ? project.getProperty('dbpass') : ''
+    from('src/main/kubernetes') {
+        filter(ReplaceTokens, tokens: [PASSWORD: dbpass])
+    }
+    into 'build/kubernetes'
 }
 
 check.dependsOn testIntegration

@@ -4,7 +4,7 @@ metadata:
   name: items-api
   namespace: default
 stringData:
-  password: password
+  password: @PASSWORD@
 ---
 apiVersion: sql.cnrm.cloud.google.com/v1beta1
 kind: SQLInstance
