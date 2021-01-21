@@ -27,6 +27,8 @@ metadata:
 spec:
   databaseVersion: POSTGRES_13
   region: europe-west6
+  settings:
+    tier: db-custom-1-3840
 ---
 apiVersion: sql.cnrm.cloud.google.com/v1beta1
 kind: SQLDatabase
