@@ -53,6 +53,8 @@ spec:
           env:
             - name: "SPRING_DATASOURCE_URL"
               value: "jdbc:postgresql://localhost:5432/items-db"
+            - name: "SPRING_DATASOURCE_USERNAME"
+              value: "items-api@items-project-1.iam"
         - name: cloud-sql-proxy
           # It is recommended to use the latest version of the Cloud SQL proxy
           # Make sure to update on a regular schedule!
