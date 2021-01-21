@@ -1,17 +1,3 @@
-apiVersion: sql.cnrm.cloud.google.com/v1beta1
-kind: SQLUser
-metadata:
-  name: items-api
-spec:
-  instanceRef:
-    name: production
-  host: "%"
-  password:
-    valueFrom:
-      secretKeyRef:
-        name: items-api
-        key: password
----
 apiVersion: v1
 kind: Secret
 metadata:
@@ -24,6 +10,7 @@ apiVersion: sql.cnrm.cloud.google.com/v1beta1
 kind: SQLInstance
 metadata:
   name: production
+  namespace: default
 spec:
   databaseVersion: POSTGRES_13
   region: europe-west6
@@ -34,9 +21,25 @@ apiVersion: sql.cnrm.cloud.google.com/v1beta1
 kind: SQLDatabase
 metadata:
   name: items-db
+  amespace: default
 spec:
   instanceRef:
     name: production
+---
+apiVersion: sql.cnrm.cloud.google.com/v1beta1
+kind: SQLUser
+metadata:
+  name: items-api
+  namespace: default
+spec:
+  instanceRef:
+    name: production
+  host: "%"
+  password:
+    valueFrom:
+      secretKeyRef:
+        name: items-api
+        key: password
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
@@ -96,7 +99,10 @@ spec:
             - name: "SPRING_DATASOURCE_USERNAME"
               value: "items-api"
             - name: "SPRING_DATASOURCE_PASSWORD"
-              value: "password"
+              valueFrom:
+                secretKeyRef:
+                  name: items-api
+                  key: password
         - name: cloud-sql-proxy
           # It is recommended to use the latest version of the Cloud SQL proxy
           # Make sure to update on a regular schedule!
