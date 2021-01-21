@@ -97,8 +97,8 @@ spec:
             - name: "SPRING_DATASOURCE_PASSWORD"
               valueFrom:
                 secretKeyRef:
-                  name: items-api
-                  key: password
+                  name: "items-api"
+                  key: "password"
         - name: cloud-sql-proxy
           # It is recommended to use the latest version of the Cloud SQL proxy
           # Make sure to update on a regular schedule!
