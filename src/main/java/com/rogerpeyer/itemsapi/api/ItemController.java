@@ -7,6 +7,7 @@ import com.rogerpeyer.itemsapi.persistence.model.ItemPo;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/items")
 @AllArgsConstructor
+@Transactional
 class ItemController {
 
   private final ItemConverter itemConverter;
