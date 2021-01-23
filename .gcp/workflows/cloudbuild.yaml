@@ -10,11 +10,14 @@ steps:
   ##  env:
   ##    - "CLOUDSDK_COMPUTE_REGION=$_GKE_LOCATION"
   ##    - "CLOUDSDK_CONTAINER_CLUSTER=$_GKE_CLUSTER"
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: 'bash'
+    args: [ '-c', "gcloud secrets versions access latest --secret=production-db-password --format='get(payload.data)' | tr '_-' '/+' | base64 -d > password.txt" ]
   # Build Image
   - name: 'openjdk:11-jdk'
     env: ["GRADLE_USER_HOME=cache"]
     entrypoint: "bash"
-    args: [ "-c", "./gradlew bootBuildImage --imageName=$_IMAGE_NAME:$COMMIT_SHA processKubernetesResources -Pdbpass=password"]
+    args: [ "-c", "./gradlew bootBuildImage --imageName=$_IMAGE_NAME:$COMMIT_SHA processKubernetesResources -Pdbpass=$(echo $(cat password.txt))"]
   # Push Image
   - name: gcr.io/cloud-builders/docker
     args:
