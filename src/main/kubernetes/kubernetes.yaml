@@ -24,6 +24,8 @@ kind: SQLDatabase
 metadata:
   name: items-db
   amespace: default
+  annotations:
+    cnrm.cloud.google.com/project-id: items-project-1
 spec:
   instanceRef:
     name: production
@@ -33,6 +35,8 @@ kind: SQLUser
 metadata:
   name: items-api
   namespace: default
+  annotations:
+    cnrm.cloud.google.com/project-id: items-project-1
 spec:
   instanceRef:
     name: production
@@ -48,6 +52,8 @@ kind: IAMServiceAccount
 metadata:
   name: items-api
   namespace: default
+  annotations:
+    cnrm.cloud.google.com/project-id: items-project-1
 spec:
   displayName: items-api
 ---
@@ -56,11 +62,15 @@ kind: IAMPolicy
 metadata:
   name: items-api
   namespace: default
+  annotations:
+    cnrm.cloud.google.com/project-id: items-project-1
 spec:
   resourceRef:
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
     name: items-api
+    annotations:
+      cnrm.cloud.google.com/project-id: items-project-1
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:
