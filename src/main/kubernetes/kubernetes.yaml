@@ -11,6 +11,8 @@ kind: SQLInstance
 metadata:
   name: production
   namespace: default
+  annotations:
+    cnrm.cloud.google.com/project-id: items-project-1
 spec:
   databaseVersion: POSTGRES_13
   region: europe-west6
