@@ -179,7 +179,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /*
+          - path: /items
             backend:
               serviceName: items-api-service
               servicePort: 80
