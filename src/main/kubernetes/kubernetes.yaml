@@ -82,33 +82,33 @@ metadata:
   name: items-api
   namespace: default
 ---
-apiVersion: "apps/v1"
-kind: "Deployment"
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: "items-api"
-  namespace: "default"
+  name: items-api
+  namespace: default
   labels:
-    app: "items-api"
+    app: items-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: "items-api"
+      app: items-api
   template:
     metadata:
       labels:
-        app: "items-api"
+        app: items-api
     spec:
-      serviceAccountName: "items-api"
+      serviceAccountName: items-api
       containers:
-        - name: "items-api-sha256-1"
-          image: "gcr.io/@PROJECT_ID@/items-api"
+        - name: items-api-sha256-1
+          image: gcr.io/@PROJECT_ID@/items-api
           env:
-            - name: "SPRING_DATASOURCE_URL"
-              value: "jdbc:postgresql://localhost:5432/items-db"
-            - name: "SPRING_DATASOURCE_USERNAME"
-              value: "items-api"
-            - name: "SPRING_DATASOURCE_PASSWORD"
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://localhost:5432/items-db
+            - name: SPRING_DATASOURCE_USERNAME
+              value: items-api
+            - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: items-api
@@ -132,39 +132,54 @@ spec:
             # "nonroot" user and group (uid: 65532) by default.
             runAsNonRoot: true
 ---
-apiVersion: "autoscaling/v2beta1"
-kind: "HorizontalPodAutoscaler"
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
 metadata:
-  name: "items-api-hpa-homr"
-  namespace: "default"
+  name: items-api-hpa-homr
+  namespace: default
   labels:
-    app: "items-api"
+    app: items-api
 spec:
   scaleTargetRef:
-    kind: "Deployment"
-    name: "items-api"
-    apiVersion: "apps/v1"
+    kind: Deployment
+    name: items-api
+    apiVersion: apps/v1
   minReplicas: 1
   maxReplicas: 5
   metrics:
-    - type: "Resource"
+    - type: Resource
       resource:
-        name: "cpu"
+        name: cpu
         targetAverageUtilization: 80
 ---
-apiVersion: "v1"
-kind: "Service"
+apiVersion: v1
+kind: Service
 metadata:
-  name: "items-api-service"
-  namespace: "default"
+  name: items-api-service
+  namespace: default
   labels:
-    app: "items-api"
+    app: items-api
 spec:
   ports:
-    - protocol: "TCP"
+    - protocol: TCP
       port: 80
       targetPort: 8080
   selector:
-    app: "items-api"
-  type: "LoadBalancer"
-  loadBalancerIP: ""
+    app: items-api
+  type: NodePort
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: items-api-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: gce
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: items-api-service
+              servicePort: 80
