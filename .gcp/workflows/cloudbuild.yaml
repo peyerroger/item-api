@@ -17,7 +17,7 @@ steps:
   - name: 'openjdk:11-jdk'
     env: ["GRADLE_USER_HOME=cache"]
     entrypoint: "bash"
-    args: [ "-c", "./gradlew bootBuildImage --imageName=$_IMAGE_NAME:$COMMIT_SHA processKubernetesResources -Pdbpass=$(echo $(cat password.txt))"]
+    args: [ "-c", "./gradlew bootBuildImage --imageName=$_IMAGE_NAME:$COMMIT_SHA processKubernetesResources -Pdbpass=$(echo $(cat password.txt)) -PprojectId=$PROJECT_ID"]
   # Push Image
   - name: gcr.io/cloud-builders/docker
     args:
@@ -66,12 +66,12 @@ options:
 substitutions:
   _K8S_LABELS: ''
   _K8S_ANNOTATIONS: gcb-trigger-id=11514a9a-14cd-41ef-98a4-5d358f08a2e9
-  _IMAGE_NAME: gcr.io/items-project-1/items-api
+  _IMAGE_NAME: gcr.io/$PROJECT_ID/items-api
   _GKE_LOCATION: europe-west6-a
   _K8S_NAMESPACE: default
   _GKE_CLUSTER: production
   _K8S_YAML_PATH: build/kubernetes/
-  _OUTPUT_BUCKET_PATH: items-project-1_cloudbuild/deploy
+  _OUTPUT_BUCKET_PATH: $PROJECT_ID_cloudbuild/deploy
   _K8S_APP_NAME: items-api
 
 

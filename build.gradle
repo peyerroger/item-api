@@ -73,8 +73,9 @@ test {
 
 task processKubernetesResources(type: Copy) {
     String dbpass = project.hasProperty('dbpass') ? project.getProperty('dbpass') : ''
+    String projectId = project.hasProperty('projectId') ? project.getProperty('projectId') : ''
     from('src/main/kubernetes') {
-        filter(ReplaceTokens, tokens: [PASSWORD: dbpass])
+        filter(ReplaceTokens, tokens: [PASSWORD: dbpass, PROJECT_ID: projectId])
     }
     into 'build/kubernetes'
 }

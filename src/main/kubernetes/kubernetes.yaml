@@ -12,7 +12,7 @@ metadata:
   name: production
   namespace: default
   annotations:
-    cnrm.cloud.google.com/project-id: items-project-1
+    cnrm.cloud.google.com/project-id: @PROJECT_ID@
 spec:
   databaseVersion: POSTGRES_13
   region: europe-west6
@@ -25,7 +25,7 @@ metadata:
   name: items-db
   amespace: default
   annotations:
-    cnrm.cloud.google.com/project-id: items-project-1
+    cnrm.cloud.google.com/project-id: @PROJECT_ID@
 spec:
   instanceRef:
     name: production
@@ -36,7 +36,7 @@ metadata:
   name: items-api
   namespace: default
   annotations:
-    cnrm.cloud.google.com/project-id: items-project-1
+    cnrm.cloud.google.com/project-id: @PROJECT_ID@
 spec:
   instanceRef:
     name: production
@@ -53,7 +53,7 @@ metadata:
   name: items-api
   namespace: default
   annotations:
-    cnrm.cloud.google.com/project-id: items-project-1
+    cnrm.cloud.google.com/project-id: @PROJECT_ID@
 spec:
   displayName: items-api
 ---
@@ -63,7 +63,7 @@ metadata:
   name: items-api
   namespace: default
   annotations:
-    cnrm.cloud.google.com/project-id: items-project-1
+    cnrm.cloud.google.com/project-id: @PROJECT_ID@
 spec:
   resourceRef:
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -72,13 +72,13 @@ spec:
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:
-        - serviceAccount:items-project-1.svc.id.goog[default/items-api]
+        - serviceAccount:@PROJECT_ID@.svc.id.goog[default/items-api]
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   annotations:
-    iam.gke.io/gcp-service-account: items-api@items-project-1.iam.gserviceaccount.com
+    iam.gke.io/gcp-service-account: items-api@@PROJECT_ID@.iam.gserviceaccount.com
   name: items-api
   namespace: default
 ---
@@ -102,7 +102,7 @@ spec:
       serviceAccountName: "items-api"
       containers:
         - name: "items-api-sha256-1"
-          image: "gcr.io/items-project-1/items-api"
+          image: "gcr.io/@PROJECT_ID@/items-api"
           env:
             - name: "SPRING_DATASOURCE_URL"
               value: "jdbc:postgresql://localhost:5432/items-db"
@@ -126,7 +126,7 @@ spec:
 
             # Replace DB_PORT with the port the proxy should listen on
             # Defaults: MySQL: 3306, Postgres: 5432, SQLServer: 1433
-            - "-instances=items-project-1:europe-west6:production=tcp:5432"
+            - "-instances=@PROJECT_ID@:europe-west6:production=tcp:5432"
           securityContext:
             # The default Cloud SQL proxy image runs as the
             # "nonroot" user and group (uid: 65532) by default.
